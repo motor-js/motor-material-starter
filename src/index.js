@@ -15,7 +15,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <HelmetProvider>
-    <Store>
+    <Store value="dark">
       <CollapseDrawerProvider>
         <BrowserRouter>
           <App />

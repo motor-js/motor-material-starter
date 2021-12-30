@@ -40,6 +40,7 @@ function SettingsProvider({ children }) {
   });
 
   const onChangeMode = (event) => {
+    console.log(event)
     setSettings({
       ...settings,
       themeMode: event.target.value,
@@ -47,6 +48,7 @@ function SettingsProvider({ children }) {
   };
 
   const onToggleMode = () => {
+    console.log('called')
     setSettings({
       ...settings,
       themeMode: settings.themeMode === 'light' ? 'dark' : 'light',
