@@ -18,7 +18,7 @@ import { qlikConfig } from './config'
 
 ReactDOM.render(
   <HelmetProvider>
-    <Motor config={qlikConfig}>
+    <Motor config={qlikConfig} licenseKey="U2FsdGVkX19vjmrWbhnS5zEHEGj2PxXnorHHCxZ55lg=">
       <Store value="dark">
         <CollapseDrawerProvider>
           <BrowserRouter>

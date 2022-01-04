@@ -42,5 +42,5 @@ export const ICON = {
 // ----------------------------------------------------------------------
 
 export const defaultSettings = {
-  themeMode: 'dark',
+  themeMode: 'light',
 };
