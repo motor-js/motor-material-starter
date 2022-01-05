@@ -11,7 +11,7 @@ import Iconify from '../../components/Iconify';
 import FilterSidebar from '../../components/FilterSidebar';
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
-import NotificationsPopover from './NotificationsPopover';
+import SelectionsPopover from './SelectionsPopover'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
@@ -90,13 +90,13 @@ export default function DashboardNavbar({ onOpenSidebar, isCollapse = false, }) 
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+          <SelectionsPopover />
+          <AccountPopover />
           <FilterSidebar
               isOpenFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
           />
-          <NotificationsPopover />
-          <AccountPopover />
         </Stack>
       </Toolbar>
     </RootStyle>
