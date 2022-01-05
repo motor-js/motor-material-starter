@@ -11,21 +11,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 am4core.useTheme(am4themes_animated);
 
 const BarExampleCompact = () => {
-  const colors = [
-    '#B03060',
-    '#FE9A76',
-    '#FFD700',
-    '#32CD32',
-    '#016936',
-    '#008080',
-    '#0E6EB8',
-    '#EE82EE',
-    '#B413EC',
-    '#FF1493',
-    '#A52A2A',
-    '#A0A0A0',
-    '#000000',
-  ];
+  const colors = ['#ff7272', '#ff7272', '#ff7272'];
 
   const cols = [
     {
@@ -35,14 +21,17 @@ const BarExampleCompact = () => {
     {
       qField: '=sum(BURGER_PRICE * SALES_QTY)',
       qLabel: 'Revenue',
-      // useFormatting: true,
-      // qNumType: "M",
-      // qNumFmt: "£#,##0",
+      useFormatting: true,
+      qNumType: 'M',
+      qNumFmt: '£#,##0',
     },
   ];
 
+  const qSuppressZero = true;
+
   const { dataSet, select } = useData({
     cols,
+    qSuppressZero,
   });
 
   const { data } = dataSet;
