@@ -12,6 +12,8 @@ export default function DashboardApp() {
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
+        </Box>
+        <Box sx={{ pb: 5 }}>
           <Bar />
         </Box>
       </Container>
