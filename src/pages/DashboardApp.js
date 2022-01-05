@@ -2,6 +2,7 @@
 import { Box, Container, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
+import Bar from '../components/Bar';
 
 // ----------------------------------------------------------------------
 
@@ -11,6 +12,7 @@ export default function DashboardApp() {
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
+          <Bar />
         </Box>
       </Container>
     </Page>

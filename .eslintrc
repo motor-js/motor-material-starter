@@ -57,6 +57,8 @@
     "react/jsx-curly-brace-presence": 0,
     "react/destructuring-assignment": 0,
     "import/no-extraneous-dependencies": 0,
+    "react/self-closing-comp": 0,
+    
     "no-unused-vars": [
       1,
       {
