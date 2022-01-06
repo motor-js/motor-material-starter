@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react';
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState } from 'react';
+// icons
 import bellFill from '@iconify/icons-eva/bell-fill';
+// motor
+import { useSelections, useButton } from '@motor-js/engine'
 // material
 import { alpha } from '@mui/material/styles';
 import { List, ListSubheader, ListItemButton, ListItemIcon, Collapse, ListItemText, IconButton } from '@mui/material';
@@ -13,10 +16,15 @@ import StarBorder from '@mui/icons-material/StarBorder';
 // components
 import MenuPopover from '../../components/MenuPopover';
 
+
 export default function SelectionsPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState(false);
+
+  const { selections, clearSelections } = useSelections();
+
+  console.log(selections)
 
   const handleOpen = () => {
     setOpen(true);
@@ -66,39 +74,22 @@ export default function SelectionsPopover() {
           aria-labelledby="nested-list-subheader"
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              Nested List Items
+              Current Selections
             </ListSubheader>
           }
         >
-          <ListItemButton>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sent mail" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
-          </ListItemButton>
-          <ListItemButton onClick={handleClick}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary="Starred" />
-              </ListItemButton>
-            </List>
-          </Collapse>
+           {selections && selections.length > 0 && (
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Starred" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+           )}
         </List>
       </MenuPopover>
     </>
