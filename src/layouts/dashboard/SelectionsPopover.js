@@ -2,17 +2,29 @@ import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
 // icons
 import bellFill from '@iconify/icons-eva/bell-fill';
+import roundClearAll from '@iconify/icons-ic/round-clear-all';
+import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // motor
 import { useSelections, useButton } from '@motor-js/engine'
 // material
 import { alpha } from '@mui/material/styles';
-import { List, ListSubheader, ListItemButton, ListItemIcon, Collapse, ListItemText, IconButton } from '@mui/material';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import { 
+  List,
+  ListSubheader,
+  ListItemButton,
+  ListItemIcon,
+  Collapse,
+  ListItemText,
+  IconButton,
+  Badge,
+  Box, 
+  Button
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 // components
 import MenuPopover from '../../components/MenuPopover';
 
@@ -66,10 +78,10 @@ export default function SelectionsPopover() {
         open={open}
         onClose={handleClose}
         anchorEl={anchorRef.current}
-        sx={{ width: 220 }}
+        sx={{ width: 460 }}
       >
         <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+          sx={{ width: '100%', maxWidth: 460, bgcolor: 'background.paper' }}
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
@@ -78,18 +90,62 @@ export default function SelectionsPopover() {
             </ListSubheader>
           }
         >
-           {selections && selections.length > 0 && (
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Starred" />
-                </ListItemButton>
-              </List>
-            </Collapse>
+           {selections && selections.length > 0 && 
+           selections.map((sel,i) => (
+              <Collapse key={i} in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding sx={{ display: 'flex', flexDirection: 'row' }}>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <Badge badgeContent={sel.qSelectedFieldSelectionInfo.length} color="error" />
+                    </ListItemIcon>
+                    <ListItemText primary={sel.qField}/>
+                    <KeyboardArrowDownIcon sx={{ ml: 'auto' }} fontSize="small" />
+                  </ListItemButton>
+                  <IconButton>
+                    <LockIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton>
+                    <DeleteIcon fontSize="small" sx={{ mr: 2 }} />
+                  </IconButton>
+                </List>
+              </Collapse>
+            )
            )}
+          <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={'onResetFilter'}
+              startIcon={<Icon icon={roundClearAll} />}
+            >
+              Clear Selections
+            </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={'onResetFilter'}
+              startIcon={<Icon icon={roundClearAll} />}
+            >
+              Redo
+            </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={'onResetFilter'}
+              startIcon={<Icon icon={roundClearAll} />}
+            >
+              Undo
+            </Button>
+          </Box>
         </List>
       </MenuPopover>
     </>
