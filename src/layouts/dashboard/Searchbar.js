@@ -37,7 +37,7 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 export default function Searchbar() {
 
   const [isOpen, setOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("k");
+  const [searchValue, setSearchValue] = useState("");
   const qCount = 100;
   const qGroupItemCount = 100;
 
@@ -49,8 +49,6 @@ export default function Searchbar() {
     qCount,
     qGroupItemCount
   })
-
-  console.log(flatResults)
 
   const handleOpen = () => {
     setOpen((prev) => !prev);
