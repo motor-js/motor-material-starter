@@ -3,7 +3,10 @@ import { useRef, useState } from 'react';
 // icons
 import bellFill from '@iconify/icons-eva/bell-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
-import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import baselineRedo from '@iconify/icons-ic/baseline-redo';
+import baselineUndo from '@iconify/icons-ic/baseline-undo';
+import baselineLock from '@iconify/icons-ic/baseline-lock';
+import baselineLockOpen from '@iconify/icons-ic/baseline-lock-open';
 // motor
 import { useSelections, useButton } from '@motor-js/engine'
 // material
@@ -11,7 +14,7 @@ import { alpha } from '@mui/material/styles';
 import { 
   List,
   ListSubheader,
-  ListItemButton,
+  ListItem,
   ListItemIcon,
   Collapse,
   ListItemText,
@@ -24,6 +27,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
 
 // components
 import MenuPopover from '../../components/MenuPopover';
@@ -35,8 +39,7 @@ export default function SelectionsPopover() {
   const [openSub, setOpenSub] = useState(false);
 
   const { selections, clearSelections } = useSelections();
-
-  console.log(selections)
+  const { nextSelection, previousSelection } = useButton();
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,9 +49,21 @@ export default function SelectionsPopover() {
     setOpen(false);
   };
 
-  const handleClick = () => {
-    setOpenSub(!openSub);
-  };
+  const handleClearSelections = () => {
+    clearSelections()
+  }
+
+  const handleNextSelection = () => {
+    nextSelection()
+  }
+
+  const handlePrevSelection = () => {
+    previousSelection()
+  }
+
+  const handleLockField = () => { }
+
+  const handleUnlockField = () => { }
 
   return (
     <>
@@ -90,35 +105,43 @@ export default function SelectionsPopover() {
             </ListSubheader>
           }
         >
-           {selections && selections.length > 0 && 
+           {selections && selections.length > 0 ?
            selections.map((sel,i) => (
               <Collapse key={i} in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding sx={{ display: 'flex', flexDirection: 'row' }}>
-                  <ListItemButton sx={{ pl: 4 }}>
+                  <ListItem sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <Badge badgeContent={sel.qSelectedFieldSelectionInfo.length} color="error" />
                     </ListItemIcon>
-                    <ListItemText primary={sel.qField}/>
-                    <KeyboardArrowDownIcon sx={{ ml: 'auto' }} fontSize="small" />
-                  </ListItemButton>
-                  <IconButton>
-                    <LockIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton>
-                    <DeleteIcon fontSize="small" sx={{ mr: 2 }} />
-                  </IconButton>
+                    <ListItemText primary={sel.qField} secondary={sel.qSelected}/>
+                  </ListItem>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <IconButton>
+                      <LockOpenIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <IconButton>
+                      <ClearIcon fontSize="small" sx={{ mr: 2 }} />
+                    </IconButton>
+                  </Box>
                 </List>
               </Collapse>
             )
-           )}
-          <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
+           ) : 
+              <Box>
+                <ListItemText sx={{ display: 'flex', justifyContent: 'center' }}>Nothing selected yet</ListItemText>
+              </Box>
+            }
+            <Box sx={{ p: 3}}>
+            <Box sx={{ py: 1, display: 'flex', justifyContent: 'flex-start' }}>
             <Button
               sx={{ mx: 0.5 }}
               size="small"
               type="submit"
               color="inherit"
               variant="outlined"
-              onClick={'onResetFilter'}
+              onClick={handleClearSelections}
               startIcon={<Icon icon={roundClearAll} />}
             >
               Clear Selections
@@ -129,8 +152,8 @@ export default function SelectionsPopover() {
               type="submit"
               color="inherit"
               variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}
+              onClick={handleNextSelection}
+              startIcon={<Icon icon={baselineRedo} />}
             >
               Redo
             </Button>
@@ -140,11 +163,36 @@ export default function SelectionsPopover() {
               type="submit"
               color="inherit"
               variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}
+              onClick={handlePrevSelection}
+              startIcon={<Icon icon={baselineUndo} />}
             >
               Undo
             </Button>
+            </Box>
+            <Box sx={{ py: 1, display: 'flex', justifyContent: 'flex-start' }}>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={handleLockField}
+                startIcon={<Icon icon={baselineLock} />}
+              >
+                Lock All
+              </Button>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={handleUnlockField}
+                startIcon={<Icon icon={baselineLockOpen} />}
+              >
+                Unlock All
+              </Button>
+          </Box>
           </Box>
         </List>
       </MenuPopover>
