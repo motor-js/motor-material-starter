@@ -8,9 +8,7 @@ import {
   Button,
   Drawer,
 } from '@mui/material';
-//
-
-
+import MotorFilter from './MotorFilter';
 // ----------------------------------------------------------------------
 
 FilterSidebar.propTypes = {
@@ -58,6 +56,8 @@ export default function FilterSidebar({
               >
                 Clear All
               </Button>
+              <MotorFilter dimension={['BURGER']}/>
+              <MotorFilter dimension={['RESTAURANT']}/>
             </Box>
           </Drawer>
     </>

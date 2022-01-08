@@ -2,8 +2,7 @@ import { useState,useEffect } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Input, Slide, Button, InputAdornment, ClickAwayListener } from '@mui/material';
-import { useSearch,useList } from "@motor-js/engine"
-import { Filter } from '@motor-js/components'
+import { useSearch } from "@motor-js/engine"
 // utils
 import cssStyles from '../../utils/cssStyles';
 // components
@@ -38,7 +37,6 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 export default function Searchbar() {
 
   const [isOpen, setOpen] = useState(false);
-  const [options, setOptions] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const qCount = 100;
   const qGroupItemCount = 100;
@@ -50,9 +48,7 @@ export default function Searchbar() {
     searchValue,
     qCount,
     qGroupItemCount
-  });
-  console.log(searchValue);
-
+  })
 
   const handleOpen = () => {
     setOpen((prev) => !prev);

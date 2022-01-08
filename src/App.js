@@ -1,7 +1,9 @@
+// motor
+import { ThemeProvider, defaultTheme } from '@motor-js/theme';
 // routes
 import Router from './routes';
 // theme
-import ThemeProvider from './theme';
+import MaterialThemeProvider from './theme';
 import ThemeColorPresets from './components/ThemeColorPresets';
 // components
 import ScrollToTop from './components/ScrollToTop';
@@ -11,13 +13,15 @@ import MotionLazyContainer from './components/animate/MotionLazyContainer';
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <MaterialThemeProvider>
       <ThemeColorPresets>
-        <MotionLazyContainer>
-          <ScrollToTop />
-          <Router />
-        </MotionLazyContainer>
+        <ThemeProvider theme={defaultTheme}>
+          <MotionLazyContainer>
+            <ScrollToTop />
+            <Router />
+          </MotionLazyContainer>
+        </ThemeProvider>
       </ThemeColorPresets>
-    </ThemeProvider>
+    </MaterialThemeProvider>
   );
 }

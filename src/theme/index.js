@@ -14,11 +14,11 @@ import shadows, { customShadows } from './shadows';
 
 // ----------------------------------------------------------------------
 
-ThemeProvider.propTypes = {
+MaterialThemeProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export default function ThemeProvider({ children }) {
+export default function MaterialThemeProvider({ children }) {
   const { themeMode, themeDirection } = useSettings();
   const isLight = themeMode === 'light';
 
@@ -47,3 +47,4 @@ export default function ThemeProvider({ children }) {
     </StyledEngineProvider>
   );
 }
+
