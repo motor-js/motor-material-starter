@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Input, Slide, Button, InputAdornment, ClickAwayListener } from '@mui/material';
+import { useSearch,useList } from "@motor-js/engine"
+import { Filter } from '@motor-js/components'
 // utils
 import cssStyles from '../../utils/cssStyles';
 // components
@@ -34,7 +36,23 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Searchbar() {
+
   const [isOpen, setOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const qCount = 100;
+  const qGroupItemCount = 100;
+
+  const { 
+    flatResults,
+    flatSelect,
+  } = useSearch({ 
+    searchValue,
+    qCount,
+    qGroupItemCount
+  });
+  console.log(searchValue);
+
 
   const handleOpen = () => {
     setOpen((prev) => !prev);
@@ -43,6 +61,20 @@ export default function Searchbar() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSearch = (value) => (
+    setSearchValue(value)
+  )
+
+
+  const handleSelect = (val, dim) => {
+    flatSelect(dim,val)
+    handleClose();
+  };
+
+  useEffect(() => {
+    setOptions(flatResults)
+  },[flatResults])
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -60,6 +92,7 @@ export default function Searchbar() {
               fullWidth
               disableUnderline
               placeholder="Search…"
+              onChange={(e) => handleSearch(e.target.value)}
               startAdornment={
                 <InputAdornment position="start">
                   <Iconify
@@ -74,6 +107,10 @@ export default function Searchbar() {
               Search
             </Button>
           </SearchbarStyle>
+
+
+          
+
         </Slide>
       </div>
     </ClickAwayListener>
