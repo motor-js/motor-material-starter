@@ -1,13 +1,17 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Input, Slide, Button, InputAdornment, ClickAwayListener } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+// motor
 import { useSearch } from "@motor-js/engine"
 // utils
-import cssStyles from '../../utils/cssStyles';
+import cssStyles from '../../../utils/cssStyles';
 // components
-import Iconify from '../../components/Iconify';
-import { IconButtonAnimate } from '../../components/animate';
+import Iconify from '../../../components/Iconify';
+import { IconButtonAnimate } from '../../../components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -35,16 +39,16 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Searchbar() {
-
+  const [options, setOptions] = useState([]);
   const [isOpen, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const qCount = 100;
   const qGroupItemCount = 100;
 
-  const { 
+  const {
     flatResults,
     flatSelect,
-  } = useSearch({ 
+  } = useSearch({
     searchValue,
     qCount,
     qGroupItemCount
@@ -62,16 +66,22 @@ export default function Searchbar() {
     setSearchValue(value)
   )
 
-
   const handleSelect = (val, dim) => {
-    flatSelect(dim,val)
+    flatSelect(dim, val)
     handleClose();
   };
 
   useEffect(() => {
     setOptions(flatResults)
-  },[flatResults])
+  }, [flatResults])
 
+  console.log(flatResults);
+
+  const searchValues = {
+    options: flatResults,
+    getOptionLabel: (option) => option.value,
+  };
+// ----------------------------------------------------------------------
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <div>
@@ -82,31 +92,27 @@ export default function Searchbar() {
         )}
 
         <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
-          <SearchbarStyle>
-            <Input
-              autoFocus
-              fullWidth
-              disableUnderline
-              placeholder="Search…"
-              onChange={(e) => handleSearch(e.target.value)}
-              startAdornment={
-                <InputAdornment position="start">
-                  <Iconify
-                    icon={'eva:search-fill'}
-                    sx={{ color: 'text.disabled', width: 20, height: 20 }}
-                  />
-                </InputAdornment>
-              }
-              sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
-            />
-            <Button variant="contained" onClick={handleClose}>
-              Search
-            </Button>
-          </SearchbarStyle>
+          <Stack>
+            <SearchbarStyle>
+              <Autocomplete
+                {...searchValues}
+                disableUnderline
+                fullWidth
+                autoComplete
+                autoHighlight
+                includeInputInList
+                placeholder="Search…"
 
-
-          
-
+                renderInput={(params) => (
+                  <TextField {...params} variant="standard" label="Search.."
+                    onChange={(e) => handleSearch(e.target.value)} />
+                )}
+              />
+              <Button variant="contained" onClick={handleClose}>
+                Search
+              </Button>
+            </SearchbarStyle>
+          </Stack>
         </Slide>
       </div>
     </ClickAwayListener>
