@@ -8,7 +8,7 @@ import baselineUndo from '@iconify/icons-ic/baseline-undo';
 import baselineLock from '@iconify/icons-ic/baseline-lock';
 import baselineLockOpen from '@iconify/icons-ic/baseline-lock-open';
 // motor
-import { useSelections, useButton } from '@motor-js/engine'
+import { useSelections, useButton, useApp } from '@motor-js/engine'
 // material
 import { alpha } from '@mui/material/styles';
 import { 
@@ -28,7 +28,6 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
-
 // components
 import MenuPopover from '../../components/MenuPopover';
 
@@ -36,11 +35,15 @@ import MenuPopover from '../../components/MenuPopover';
 export default function SelectionsPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [openSub, setOpenSub] = useState(false);
 
   const { selections, clearSelections } = useSelections();
-  const { nextSelection, previousSelection } = useButton();
-
+  const { 
+    lockField,
+    unlockField,
+    nextSelection,
+    previousSelection 
+  } = useButton();
+ 
   const handleOpen = () => {
     setOpen(true);
   };
@@ -53,6 +56,10 @@ export default function SelectionsPopover() {
     clearSelections()
   }
 
+  const handleClear = (field) => {
+    clearSelections(field)
+  }
+
   const handleNextSelection = () => {
     nextSelection()
   }
@@ -61,6 +68,8 @@ export default function SelectionsPopover() {
     previousSelection()
   }
 
+  const handleLock = (s) => ( s.qLocked === true ? unlockField(s.qField) : lockField(s.qField) )
+  
   const handleLockField = () => { }
 
   const handleUnlockField = () => { }
@@ -115,16 +124,33 @@ export default function SelectionsPopover() {
                     </ListItemIcon>
                     <ListItemText primary={sel.qField} secondary={sel.qSelected}/>
                   </ListItem>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <IconButton>
-                      <LockOpenIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <IconButton>
-                      <ClearIcon fontSize="small" sx={{ mr: 2 }} />
-                    </IconButton>
-                  </Box>
+                  {sel.qLocked === true ?  
+                    <>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton onClick={() => handleLock(sel)} >
+                          <LockIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+                        <IconButton onClick={() => handleClear(sel.qField)} disabled>
+                          <ClearIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    </>
+                    :
+                    <>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton onClick={() => handleLock(sel)} >
+                          <LockOpenIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+                        <IconButton onClick={() => handleClear(sel.qField)}>
+                          <ClearIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    </>
+                  }           
                 </List>
               </Collapse>
             )
@@ -169,30 +195,6 @@ export default function SelectionsPopover() {
               Undo
             </Button>
             </Box>
-            <Box sx={{ py: 1, display: 'flex', justifyContent: 'flex-start' }}>
-              <Button
-                sx={{ mx: 0.5 }}
-                size="small"
-                type="submit"
-                color="inherit"
-                variant="outlined"
-                onClick={handleLockField}
-                startIcon={<Icon icon={baselineLock} />}
-              >
-                Lock All
-              </Button>
-              <Button
-                sx={{ mx: 0.5 }}
-                size="small"
-                type="submit"
-                color="inherit"
-                variant="outlined"
-                onClick={handleUnlockField}
-                startIcon={<Icon icon={baselineLockOpen} />}
-              >
-                Unlock All
-              </Button>
-          </Box>
           </Box>
         </List>
       </MenuPopover>
