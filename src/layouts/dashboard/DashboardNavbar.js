@@ -20,9 +20,7 @@ import useResponsive from '../../hooks/useResponsive';
 import cssStyles from '../../utils/cssStyles';
 // config
 import { HEADER, NAVBAR } from '../../config';
-
 // ----------------------------------------------------------------------
-
 const RootStyle = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'isCollapse' && prop !== 'isOffset' && prop !== 'verticalLayout',
 })(({ isCollapse, isOffset, verticalLayout, theme }) => ({

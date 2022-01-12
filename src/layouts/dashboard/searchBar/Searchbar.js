@@ -44,6 +44,11 @@ export default function Searchbar() {
   const [searchValue, setSearchValue] = useState("");
   const qCount = 100;
   const qGroupItemCount = 100;
+  const [typingTimer, setTypingTimer] = useState('');
+  const [doneTypingInterval, setdoneTypingInterval] = useState();
+  const [userInput, setuserInput] = useState();
+
+
 
   const {
     flatResults,
@@ -75,12 +80,27 @@ export default function Searchbar() {
     setOptions(flatResults)
   }, [flatResults])
 
-  console.log(flatResults);
-
   const searchValues = {
     options: flatResults,
     getOptionLabel: (option) => option.value,
   };
+// user is typing something
+
+
+
+// if (userInput) {
+//   userInput.addEventListener("keyup", () => {
+//     clearTimeout(typingTimer);
+//     if (userInput.value) {
+//       typingTimer = setTimeout(doneTyping, doneTypingInterval);
+//     }
+//   });
+// }
+
+function doneTyping() {
+  console.log("done");
+}
+
 // ----------------------------------------------------------------------
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -93,22 +113,25 @@ export default function Searchbar() {
 
         <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
           <Stack>
-            <SearchbarStyle>
+            <SearchbarStyle >
               <Autocomplete
                 {...searchValues}
-                disableUnderline
+                size = "large"
                 fullWidth
                 autoComplete
                 autoHighlight
                 includeInputInList
-                placeholder="Search…"
-
+                type="search"
+                placeholder="Type and hit enter to search..."
+                customStyle="noborder"
+                fontSize={["14px", null, null, "16px"]}
+                width="100%"
                 renderInput={(params) => (
                   <TextField {...params} variant="standard" label="Search.."
                     onChange={(e) => handleSearch(e.target.value)} />
                 )}
               />
-              <Button variant="contained" onClick={handleClose}>
+              <Button variant="contained" onClick={handleClose} id="searchbtn">
                 Search
               </Button>
             </SearchbarStyle>
