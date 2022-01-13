@@ -26,7 +26,7 @@ export default function FilterSidebar({
 }) {
 
   return (
-    <>
+    <Box>
       <Button
         disableRipple
         color="primary"
@@ -36,7 +36,7 @@ export default function FilterSidebar({
         Filters&nbsp;
       </Button>
 
-          <Drawer
+        <Drawer
             anchor="right"
             open={isOpenFilter}
             onClose={onCloseFilter}
@@ -59,7 +59,7 @@ export default function FilterSidebar({
               <MotorFilter dimension={['BURGER']}/>
               <MotorFilter dimension={['RESTAURANT']}/>
             </Box>
-          </Drawer>
-    </>
+        </Drawer>
+    </Box>
   );
 }

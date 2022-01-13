@@ -10,7 +10,7 @@ import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 import { IconButtonAnimate } from '../../components/animate';
 import Iconify from '../../components/Iconify';
 import FilterSidebar from '../../components/FilterSidebar';
-import Searchbar from './searchBar/Searchbar';
+import Searchbar from './Searchbar';
 // import Searchbar from './sandbox';
 import AccountPopover from './AccountPopover';
 import SelectionsPopover from './SelectionsPopover'
@@ -87,13 +87,12 @@ export default function DashboardNavbar({ onOpenSidebar, isCollapse = false, }) 
           </IconButtonAnimate>
         )}
 
-        <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
-        <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+        <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1 }}>
+          <Searchbar />
           <BookMarksPopOver />
           <SelectionsPopover />
-          <AccountPopover />
          
           <FilterSidebar
               isOpenFilter={openFilter}
