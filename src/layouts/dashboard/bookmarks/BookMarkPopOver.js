@@ -1,14 +1,20 @@
-import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
 // icons
 import bookmark from '@iconify/icons-eva/bookmark-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import { Icon } from '@iconify/react';
+
+
 // motor
 import { useSelections, useButton } from '@motor-js/engine'
 // material
 import { alpha } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+
 import { 
   List,
   ListSubheader,
@@ -26,12 +32,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+// bookmark components
+import BookMarkHeader from '../../../components/bookmark/bookmarkHeader';
 // components
-import MenuPopover from '../../components/MenuPopover';
+import MenuPopover from '../../../components/MenuPopover';
 
 
-export default function SelectionsPopover() {
+export default function BookMarkPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState(false);
@@ -50,6 +57,9 @@ export default function SelectionsPopover() {
 
   const handleClick = () => {
     setOpenSub(!openSub);
+  };
+  const handleDelete = () => {
+    console.info('You deleted a bookmark');
   };
 
   return (
@@ -117,12 +127,16 @@ export default function SelectionsPopover() {
              <Box 
              component="form"
              sx={{
-              '& > :not(style)': { p: 3, display: 'flex', justifyContent: 'flex-start'  },
-            }}
-      noValidate
-      autoComplete="on">
-      <TextField label="" color="secondary" focused />
-      <TextField label="" color="secondary" focused />
+              '& > :not(style)': { p: 3, display: 'flex', justifyContent: 'flex-start'  }}}
+                noValidate
+                autoComplete="on">
+           <BookMarkHeader />
+        <Stack direction="row" spacing={1}>
+      <Chip label="BookMark1" onDelete={handleDelete} />
+      <Chip label="BookMark2" variant="outlined" onDelete={handleDelete} />
+    </Stack>
+      {/* <TextField label="" color="secondary" focused />
+      <TextField label="" color="secondary" focused /> */}
     </Box>
           <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
           
@@ -165,4 +179,3 @@ export default function SelectionsPopover() {
     </>
   )
 }
-
