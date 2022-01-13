@@ -14,7 +14,7 @@ import Searchbar from './searchBar/Searchbar';
 // import Searchbar from './sandbox';
 import AccountPopover from './AccountPopover';
 import SelectionsPopover from './SelectionsPopover'
-import BookMarksPopOver from './BookMarkPopOver'
+import BookMarksPopOver from './bookmarks/BookMarkPopOver'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
