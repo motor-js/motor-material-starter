@@ -11,11 +11,10 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 import addBookMark from '@iconify/icons-eva/file-add-fill';
+import editBookMark from '@iconify/icons-eva/edit-2-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 import { Icon } from '@iconify/react';
-
-
 
 export default function BookMarkHeader() {
   return (
@@ -31,7 +30,17 @@ export default function BookMarkHeader() {
             >
              Create New BookMark
             </Button>
-    <Button variant="outlined">Edit</Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={'onResetFilter'}
+              startIcon={<Icon icon={editBookMark} />}
+            >
+            Edit
+            </Button>
     </Stack>
 
   );
