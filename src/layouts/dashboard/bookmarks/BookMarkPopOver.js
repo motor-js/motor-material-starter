@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState,useCallback } from 'react';
 // icons
 import bookmark from '@iconify/icons-eva/bookmark-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 
 
 // motor
-import { useSelections, useButton } from '@motor-js/engine'
+import { useBookmark,useSelections,useButton } from "@motor-js/engine"
 // material
 import { alpha } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
@@ -15,7 +15,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 
-import { 
+import {
   List,
   ListSubheader,
   ListItemButton,
@@ -24,7 +24,7 @@ import {
   ListItemText,
   IconButton,
   Badge,
-  Box, 
+  Box,
   Button,
   BookMark
 } from '@mui/material';
@@ -42,15 +42,16 @@ export default function BookMarkPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState(false);
-
   const { selections, clearSelections } = useSelections();
+const {bookmarkList,applyBookmark,createBookmark,} = useBookmark()
+const [bookmarkOpen, setBookmarkOpen] = useState(false)
 
   console.log(selections)
 
   const handleOpen = () => {
     setOpen(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -61,6 +62,11 @@ export default function BookMarkPopover() {
   const handleDelete = () => {
     console.info('You deleted a bookmark');
   };
+
+  const bookmarkHandler = useCallback(() => {
+    setBookmarkOpen((prev) => !prev);
+    },[])
+
 
   return (
     <>
@@ -103,15 +109,15 @@ export default function BookMarkPopover() {
           }
         >
 
-           {selections && selections.length > 0 && 
-           selections.map((sel,i) => (
+          {selections && selections.length > 0 &&
+            selections.map((sel, i) => (
               <Collapse key={i} in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding sx={{ display: 'flex', flexDirection: 'row' }}>
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <Badge badgeContent={sel.qSelectedFieldSelectionInfo.length} color="error" />
                     </ListItemIcon>
-                    <ListItemText primary={sel.qField}/>
+                    <ListItemText primary={sel.qField} />
                     <KeyboardArrowDownIcon sx={{ ml: 'auto' }} fontSize="small" />
                   </ListItemButton>
                   <IconButton>
@@ -123,23 +129,21 @@ export default function BookMarkPopover() {
                 </List>
               </Collapse>
             )
-           )}
-             <Box 
-             component="form"
-             sx={{
-              '& > :not(style)': { p: 3, display: 'flex', justifyContent: 'flex-start'  }}}
-                noValidate
-                autoComplete="on">
-           <BookMarkHeader />
-        <Stack direction="row" spacing={1}>
-      <Chip label="BookMark1" onDelete={handleDelete} />
-      <Chip label="BookMark2" variant="outlined" onDelete={handleDelete} />
-    </Stack>
-      {/* <TextField label="" color="secondary" focused />
-      <TextField label="" color="secondary" focused /> */}
-    </Box>
+            )}
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { p: 3, display: 'flex', justifyContent: 'flex-start' }
+            }}
+            noValidate
+            autoComplete="on">
+            <BookMarkHeader />
+            <Stack direction="column" spacing={1}>
+              <Chip label="BookMark1" variant="outlined" onDelete={handleDelete} />
+            </Stack>
+          </Box>
           <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
-          
+
             <Button
               sx={{ mx: 0.5 }}
               size="small"
@@ -157,21 +161,8 @@ export default function BookMarkPopover() {
               color="inherit"
               variant="outlined"
               onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}
-            >
+              startIcon={<Icon icon={roundClearAll} />}>
               Undo
-            </Button>
-
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}
-            >
-              Create BookMark
             </Button>
           </Box>
         </List>

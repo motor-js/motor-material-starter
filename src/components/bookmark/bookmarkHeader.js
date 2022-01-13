@@ -41,6 +41,17 @@ export default function BookMarkHeader() {
             >
             Edit
             </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={'onResetFilter'}
+              startIcon={<Icon icon={editBookMark} />}
+            >
+            Edit
+            </Button>
     </Stack>
 
   );
