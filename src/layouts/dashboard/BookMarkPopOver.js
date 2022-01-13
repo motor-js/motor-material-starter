@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
 // icons
-import bellFill from '@iconify/icons-eva/bell-fill';
+import bookmark from '@iconify/icons-eva/bookmark-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // motor
@@ -73,7 +73,7 @@ export default function SelectionsPopover() {
           })
         }}
       >
-        <Icon icon={bellFill} width={20} height={20} />
+        <Icon icon={bookmark} width={20} height={20} />
       </IconButton>
       <MenuPopover
         open={open}

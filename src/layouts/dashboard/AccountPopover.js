@@ -16,7 +16,7 @@ export default function AccountPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const { themeMode } = useContext(SettingsContext)
-
+/* A JSX comment */
   const [themeState, setThemeState] = useState(themeMode)
 
   const MENU_OPTIONS = [

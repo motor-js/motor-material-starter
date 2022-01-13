@@ -1,95 +1,142 @@
-import { useState, useEffect } from "react";
-import { Search, X } from "react-feather";
+import { useState, useEffect } from 'react';
+// @mui
+import { styled } from '@mui/material/styles';
 import { Input, Slide, Button, InputAdornment, ClickAwayListener } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+// motor
 import { useSearch } from "@motor-js/engine"
+// utils
+import cssStyles from '../../../utils/cssStyles';
+// components
+import Iconify from '../../../components/Iconify';
+import { IconButtonAnimate } from '../../../components/animate';
 
+// ----------------------------------------------------------------------
+const APPBAR_MOBILE = 64;
+const APPBAR_DESKTOP = 92;
 
-const SearchBar = ({ isOpen, onClose }) => {
+const SearchbarStyle = styled('div')(({ theme }) => ({
+  ...cssStyles(theme).bgBlur(),
+  top: 0,
+  left: 0,
+  zIndex: 99,
+  width: '100%',
+  display: 'flex',
+  position: 'absolute',
+  alignItems: 'center',
+  height: APPBAR_MOBILE,
+  padding: theme.spacing(0, 3),
+  boxShadow: theme.customShadows.z8,
+  [theme.breakpoints.up('md')]: {
+    height: APPBAR_DESKTOP,
+    padding: theme.spacing(0, 5),
+  },
+}));
 
+// ----------------------------------------------------------------------
+
+export default function Searchbar() {
   const [options, setOptions] = useState([]);
+  const [isOpen, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-
   const qCount = 100;
   const qGroupItemCount = 100;
+  const [typingTimer, setTypingTimer] = useState('');
+  const [doneTypingInterval, setdoneTypingInterval] = useState();
+  const [userInput, setuserInput] = useState();
 
-  const { 
+
+
+  const {
     flatResults,
     flatSelect,
-  } = useSearch({ 
+  } = useSearch({
     searchValue,
     qCount,
     qGroupItemCount
   })
 
+  const handleOpen = () => {
+    setOpen((prev) => !prev);
+  };
 
-  // Temporary Search suggestions for you to update
-  const searchSuggestions = [
-    {
-    item: "California"
-    },
-    {
-      item: "Florida"
-    },
-    {
-      item: "New York"
-    }
-  ];
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSearch = (value) => (
     setSearchValue(value)
   )
 
   const handleSelect = (val, dim) => {
-    flatSelect(dim,val)
-    onClose()
+    flatSelect(dim, val)
+    handleClose();
   };
 
   useEffect(() => {
     setOptions(flatResults)
-  },[flatResults])
+  }, [flatResults])
 
+  const searchValues = {
+    options: flatResults,
+    getOptionLabel: (option) => option.value,
+  };
+// user is typing something
+
+
+
+// if (userInput) {
+//   userInput.addEventListener("keyup", () => {
+//     clearTimeout(typingTimer);
+//     if (userInput.value) {
+//       typingTimer = setTimeout(doneTyping, doneTypingInterval);
+//     }
+//   });
+// }
+
+function doneTyping() {
+  console.log("done");
+}
+
+// ----------------------------------------------------------------------
   return (
-    <SearchbarStyle $isOpen={isOpen}>
-      <StyledSearchHeader>
-        <Input
-          type="search"
-          id="nav-search"
-          name="nav-search"
-          placeholder="Type and hit enter to search..."
-          customStyle="noborder"
-          fontSize={["14px", null, null, "16px"]}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-        <StyledSearchBtn variant="texted" color="light">
-          <Search />
-        </StyledSearchBtn>
-        <StyledSearchClose variant="texted" onClick={onClose}>
-          <X />
-        </StyledSearchClose>
-      </StyledSearchHeader>
-      <StyledSearchBody>
-        <StyledSearchTitle>Search Results</StyledSearchTitle>
-        <StyledNavList>
-          { options && options.map((data,i) => (
-            <StyledNavListItem key={i} >
-              <StyledNavBtn onClick={() => handleSelect(data.value, data.dimension)}>{data.value}</StyledNavBtn>
-            </StyledNavListItem>
-          ))}
-        </StyledNavList>
-      </StyledSearchBody>
-      <StyledSearchBody>
-        <StyledNavDivider />
-        <StyledSearchTitle>Search Suggestions</StyledSearchTitle>
-        <StyledNavList>
-          {searchSuggestions.map((data, i) => (
-            <StyledNavListItem key={i}>
-              <StyledNavBtn href="#">{data.item}</StyledNavBtn>
-            </StyledNavListItem>
-          ))}
-        </StyledNavList>
-      </StyledSearchBody>
-    </SearchbarStyle>
-  );
-};
+    <ClickAwayListener onClickAway={handleClose}>
+      <div>
+        {!isOpen && (
+          <IconButtonAnimate onClick={handleOpen}>
+            <Iconify icon={'eva:search-fill'} width={20} height={20} />
+          </IconButtonAnimate>
+        )}
 
-export default SearchBar;
+        <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
+          <Stack>
+            <SearchbarStyle >
+              <Autocomplete
+                {...searchValues}
+                size = "large"
+                fullWidth = {true}
+                autoComplete
+                autoHighlight
+                includeInputInList
+                type="search"
+                placeholder="Type and hit enter to search..."
+                customStyle="noborder"
+                fontSize={["14px", null, null, "16px"]}
+                width="100%"
+                renderInput={(params) => (
+                  <TextField {...params} variant="standard" label="Search.."
+                    onChange={(e) => handleSearch(e.target.value)} />
+                )}
+              />
+              <Button variant="contained" onClick={handleClose} id="searchbtn">
+                Search
+              </Button>
+            </SearchbarStyle>
+          </Stack>
+        </Slide>
+      </div>
+    </ClickAwayListener>
+  );
+}
