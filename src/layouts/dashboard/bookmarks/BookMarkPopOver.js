@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react';
 
 // motor
 import { useBookmark,useSelections,useButton } from "@motor-js/engine"
+
 // material
 import { alpha } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
@@ -33,7 +34,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import DeleteIcon from '@mui/icons-material/Delete';
 // bookmark components
-import BookMarkHeader from '../../../components/bookmark/bookmarkHeader';
+import BookMarkHeader from '../../../components/BookMarkHeader';
 // components
 import MenuPopover from '../../../components/MenuPopover';
 
@@ -66,6 +67,8 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
   const bookmarkHandler = useCallback(() => {
     setBookmarkOpen((prev) => !prev);
     },[])
+  const handleShowCallback = () => setBookmarkOpen((prev) => !prev);
+  const handleBookmarkSelect = (d) => applyBookmark(d.id)
 
 
   return (
