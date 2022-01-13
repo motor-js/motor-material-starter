@@ -1,13 +1,14 @@
 import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
 // icons
-import bellFill from '@iconify/icons-eva/bell-fill';
+import bookmark from '@iconify/icons-eva/bookmark-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // motor
 import { useSelections, useButton } from '@motor-js/engine'
 // material
 import { alpha } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import { 
   List,
   ListSubheader,
@@ -73,7 +74,7 @@ export default function SelectionsPopover() {
           })
         }}
       >
-        <Icon icon={bellFill} width={20} height={20} />
+        <Icon icon={bookmark} width={20} height={20} />
       </IconButton>
       <MenuPopover
         open={open}
@@ -87,10 +88,11 @@ export default function SelectionsPopover() {
           aria-labelledby="nested-list-subheader"
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              Current Selections
+              BookMarks
             </ListSubheader>
           }
         >
+
            {selections && selections.length > 0 && 
            selections.map((sel,i) => (
               <Collapse key={i} in={open} timeout="auto" unmountOnExit>
@@ -112,7 +114,18 @@ export default function SelectionsPopover() {
               </Collapse>
             )
            )}
+             <Box 
+             component="form"
+             sx={{
+              '& > :not(style)': { p: 3, display: 'flex', justifyContent: 'flex-start'  },
+            }}
+      noValidate
+      autoComplete="on">
+      <TextField label="" color="secondary" focused />
+      <TextField label="" color="secondary" focused />
+    </Box>
           <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
+          
             <Button
               sx={{ mx: 0.5 }}
               size="small"
@@ -120,20 +133,8 @@ export default function SelectionsPopover() {
               color="inherit"
               variant="outlined"
               onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}
-            >
-              Clear Selections
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}
-            >
-              Redo
+              startIcon={<Icon icon={roundClearAll} />}>
+              Clear BookMarks
             </Button>
             <Button
               sx={{ mx: 0.5 }}
@@ -145,6 +146,18 @@ export default function SelectionsPopover() {
               startIcon={<Icon icon={roundClearAll} />}
             >
               Undo
+            </Button>
+
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={'onResetFilter'}
+              startIcon={<Icon icon={roundClearAll} />}
+            >
+              Create BookMark
             </Button>
           </Box>
         </List>
