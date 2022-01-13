@@ -8,7 +8,7 @@ import baselineUndo from '@iconify/icons-ic/baseline-undo';
 import baselineLock from '@iconify/icons-ic/baseline-lock';
 import baselineLockOpen from '@iconify/icons-ic/baseline-lock-open';
 // motor
-import { useSelections, useButton, useApp } from '@motor-js/engine'
+import { useSelections, useButton } from '@motor-js/engine'
 // material
 import { alpha } from '@mui/material/styles';
 import { 
@@ -36,7 +36,7 @@ export default function SelectionsPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const { selections, clearSelections } = useSelections();
+  const { selections, clearSelections, lockAll, unlockAll } = useSelections();
   const { 
     lockField,
     unlockField,
@@ -69,10 +69,6 @@ export default function SelectionsPopover() {
   }
 
   const handleLock = (s) => ( s.qLocked === true ? unlockField(s.qField) : lockField(s.qField) )
-  
-  const handleLockField = () => { }
-
-  const handleUnlockField = () => { }
 
   return (
     <>
@@ -96,7 +92,9 @@ export default function SelectionsPopover() {
           })
         }}
       >
-        <Icon icon={bellFill} width={20} height={20} />
+        <Badge badgeContent={selections && selections.length} color="primary">
+          <Icon icon={bellFill} width={20} height={20} />
+        </Badge>
       </IconButton>
       <MenuPopover
         open={open}
@@ -161,39 +159,63 @@ export default function SelectionsPopover() {
             }
             <Box sx={{ p: 3}}>
             <Box sx={{ py: 1, display: 'flex', justifyContent: 'flex-start' }}>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={handleClearSelections}
-              startIcon={<Icon icon={roundClearAll} />}
-            >
-              Clear Selections
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={handleNextSelection}
-              startIcon={<Icon icon={baselineRedo} />}
-            >
-              Redo
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={handlePrevSelection}
-              startIcon={<Icon icon={baselineUndo} />}
-            >
-              Undo
-            </Button>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={handleClearSelections}
+                startIcon={<Icon icon={roundClearAll} />}
+              >
+                Clear Selections
+              </Button>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={handleNextSelection}
+                startIcon={<Icon icon={baselineRedo} />}
+              >
+                Redo
+              </Button>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={handlePrevSelection}
+                startIcon={<Icon icon={baselineUndo} />}
+              >
+                Undo
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={lockAll}
+                startIcon={<Icon icon={baselineLock} />}
+              >
+                Lock All
+              </Button>
+              <Button
+                sx={{ mx: 0.5 }}
+                size="small"
+                type="submit"
+                color="inherit"
+                variant="outlined"
+                onClick={unlockAll}
+                startIcon={<Icon icon={baselineLockOpen} />}
+              >
+                Unlock All
+              </Button>
             </Box>
           </Box>
         </List>
