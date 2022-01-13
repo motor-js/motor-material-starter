@@ -14,7 +14,7 @@ import Searchbar from './searchBar/Searchbar';
 // import Searchbar from './sandbox';
 import AccountPopover from './AccountPopover';
 import SelectionsPopover from './SelectionsPopover'
-import BookMarksPopOver from './bookmarks/BookMarkPopOver'
+import BookMarkPopOver from './bookmarks/BookMarkPopOver'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
@@ -91,7 +91,7 @@ export default function DashboardNavbar({ onOpenSidebar, isCollapse = false, }) 
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <BookMarksPopOver />
+          <BookMarkPopOver />
           <SelectionsPopover />
           <AccountPopover />
          
