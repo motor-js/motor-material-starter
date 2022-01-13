@@ -58,10 +58,7 @@ export default function Searchbar() {
   )
 
   const handleChange = (e, val) => {
-    console.log(e)
-    console.log(val)
-    
-    // flatSelect(dim, val)
+    flatSelect(val.dimension, val.value)
   };
 
   const searchValues = {
