@@ -9,13 +9,13 @@ import TextField from '@mui/material/TextField';
 
 import editBookMark from '@iconify/icons-eva/edit-2-fill';
 import { Icon } from '@iconify/react';
+import CreateBookMarkForm from '../CreateBookMark'
 
 
 
 export default function BookMarkHeader() {
   return (
     <Stack direction="row" spacing={2}>
-
       <PopupState variant="popover">
         {(popupState) => (
           <div>
@@ -36,22 +36,8 @@ export default function BookMarkHeader() {
               transformOrigin={{
               vertical: 'top',
               horizontal: 'center'}}>
-                <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-        <Stack direction="row" spacing={2}>
-
-        <TextField id="outlined-basic" label="Title" variant="outlined" />
-  <TextField id="outlined-basic" label="Description" variant="outlined" />
-        </Stack>
-
-
-    </Box>
+              < CreateBookMarkForm />
+ 
               
             </Popover>
           </div>

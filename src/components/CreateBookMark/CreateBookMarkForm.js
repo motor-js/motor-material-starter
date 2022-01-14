@@ -1,4 +1,4 @@
-import { useRef, useState,useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 // icons
 import bookmark from '@iconify/icons-eva/bookmark-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 
 
 // motor
-import { useBookmark,useSelections,useButton } from "@motor-js/engine"
+import { useBookmark, useSelections, useButton } from "@motor-js/engine"
 
 // material
 import { alpha } from '@mui/material/styles';
@@ -49,8 +49,8 @@ export default function CreateBookMarkForm() {
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState(false);
   const { selections, clearSelections } = useSelections();
-const {bookmarkList,applyBookmark,createBookmark,} = useBookmark()
-const [bookmarkOpen, setBookmarkOpen] = useState(false)
+  const { bookmarkList, applyBookmark, createBookmark, } = useBookmark()
+  const [bookmarkOpen, setBookmarkOpen] = useState(false)
 
   console.log(selections)
 
@@ -69,110 +69,25 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
 
   const bookmarkHandler = useCallback(() => {
     setBookmarkOpen((prev) => !prev);
-    },[])
+  }, [])
   const handleShowCallback = () => setBookmarkOpen((prev) => !prev);
   const handleBookmarkSelect = (d) => applyBookmark(d.id)
 
 
   return (
-    <>
-      <IconButton
-        ref={anchorRef}
-        onClick={handleOpen}
-        sx={{
-          padding: 0,
-          width: 44,
-          height: 44,
-          ...(open && {
-            '&:before': {
-              zIndex: 1,
-              content: "''",
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-            }
-          })
-        }}
-      >
-        <Icon icon={bookmark} width={20} height={20} />
-      </IconButton>
-      <MenuPopover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorRef.current}
-        sx={{ width: 460 }}
-      >
-        <List
-          sx={{ width: '100%', maxWidth: 460, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              BookMarks
-            </ListSubheader>
-          }
-        >
+    <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off">
+      <Stack direction="row" spacing={2}>
+        <TextField id="outlined-basic" label="Title" variant="outlined" />
+        <TextField id="outlined-basic" label="Description" variant="outlined" />
+      </Stack>
 
-          {selections && selections.length > 0 &&
-            selections.map((sel, i) => (
-              <Collapse key={i} in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding sx={{ display: 'flex', flexDirection: 'row' }}>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <Badge badgeContent={sel.qSelectedFieldSelectionInfo.length} color="error" />
-                    </ListItemIcon>
-                    <ListItemText primary={sel.qField} />
-                    <KeyboardArrowDownIcon sx={{ ml: 'auto' }} fontSize="small" />
-                  </ListItemButton>
-                  <IconButton>
-                    <LockIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton>
-                    <DeleteIcon fontSize="small" sx={{ mr: 2 }} />
-                  </IconButton>
-                </List>
-              </Collapse>
-            )
-            )}
-          <Box
-            component="form"
-            sx={{
-              '& > :not(style)': { p: 3, display: 'flex', justifyContent: 'flex-start' }
-            }}
-            noValidate
-            autoComplete="on">
-            
-            <Stack direction="column" spacing={1}>
-              <Chip label="BookMark1" variant="outlined" onDelete={handleDelete} />
-            </Stack>
-          </Box>
-          <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
+    </Box>
 
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}>
-              Clear BookMarks
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={roundClearAll} />}>
-              Undo
-            </Button>
-          </Box>
-        </List>
-      </MenuPopover>
-    </>
   )
 }

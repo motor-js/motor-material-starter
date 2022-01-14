@@ -145,9 +145,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
             noValidate
             autoComplete="on">
             <BookMarkHeader />
-            <Stack direction="column" spacing={1}>
-              <Chip label="BookMark1" variant="outlined" onDelete={handleDelete} />
-            </Stack>
+           
           </Box>
           <Box sx={{ p: 3, display: 'flex', justifyContent: 'flex-start' }}>
 
