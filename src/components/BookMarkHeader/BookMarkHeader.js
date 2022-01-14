@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState, useCallback } from 'react';
 // Material
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -9,50 +9,47 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import Popover from '@mui/material/Popover';
+
 
 import addBookMark from '@iconify/icons-eva/file-add-fill';
 import editBookMark from '@iconify/icons-eva/edit-2-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 import { Icon } from '@iconify/react';
+import CreateBookMark from '../CreateBookMark';
+
 
 export default function BookMarkHeader() {
   return (
     <Stack direction="row" spacing={2}>
-              <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={addBookMark} />}
-            >
-             Create New BookMark
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={editBookMark} />}
-            >
-            Edit
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              size="small"
-              type="submit"
-              color="inherit"
-              variant="outlined"
-              onClick={'onResetFilter'}
-              startIcon={<Icon icon={editBookMark} />}
-            >
-            Edit
-            </Button>
-    </Stack>
 
+      <PopupState variant="popover">
+        {(popupState) => (
+          <div>
+            <Button
+              sx={{ mx: 0.5 }}
+              size="small"
+              type="submit"
+              color="inherit"
+              variant="outlined" {...bindTrigger(popupState)}
+              startIcon={<Icon icon={editBookMark} />}>
+              Create BookMark
+            </Button>
+            <Popover
+              {...bindPopover(popupState)}
+              anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center'}}
+              transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center'}}>
+              <Typography sx={{ p: 2 }}>Create BookMark Form</Typography>
+            </Popover>
+          </div>
+        )}
+      </PopupState>
+    </Stack>
   );
 }

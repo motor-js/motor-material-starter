@@ -36,16 +36,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 // create bookmark popover
 import Typography from '@mui/material/Typography';
-// bookmark components
-import BookMarkHeader from '../../../components/BookMarkHeader';
+
 
 
 
 // components
-import MenuPopover from '../../../components/MenuPopover';
+import MenuPopover from '../MenuPopover';
 
 
-export default function BookMarkPopover() {
+export default function CreateBookMarkForm() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState(false);
@@ -144,7 +143,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
             }}
             noValidate
             autoComplete="on">
-            <BookMarkHeader />
+            
             <Stack direction="column" spacing={1}>
               <Chip label="BookMark1" variant="outlined" onDelete={handleDelete} />
             </Stack>
