@@ -27,20 +27,14 @@ import {
   Badge,
   Box,
   Button,
-  BookMark
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockIcon from '@mui/icons-material/Lock';
+import BookMark from '@mui/icons-material/Bookmark';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-// create bookmark popover
 import Typography from '@mui/material/Typography';
 // bookmark components
 import BookMarkHeader from '../../../components/BookMarkHeader';
-
-
-
 // components
 import MenuPopover from '../../../components/MenuPopover';
 
@@ -128,7 +122,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
                     <KeyboardArrowDownIcon sx={{ ml: 'auto' }} fontSize="small" />
                   </ListItemButton>
                   <IconButton>
-                    <LockIcon fontSize="small" />
+                    <BookMark fontSize="small" />
                   </IconButton>
                   <IconButton>
                     <DeleteIcon fontSize="small" sx={{ mr: 2 }} />

@@ -1,26 +1,33 @@
 
 // material
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import {
-  IconButton,
-  Box,
-} from '@mui/material';
+import { IconButton, Box, FormControl, Stack, Typography, TextField } from '@mui/material';
+// material dialog
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function CreateBookMarkForm() {
   return (
-    <Box
-      component="form"
-      sx={{'& > :not(style)': { m: 1, width: '25ch' }}}
-      noValidate
-      autoComplete="off">
-      <Stack direction="row" spacing={2}>
-        <TextField id="outlined-basic" label="Title" variant="outlined" />
-        <TextField id="outlined-basic" label="Description" variant="outlined" />
-      </Stack>
-
+    <Box>
+      <DialogTitle id="alert-dialog-title">
+        Create New BookMark
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          <FormControl>
+            <Stack direction="column" spacing={2}>
+              <TextField id="outlined-basic" label="Title" variant="outlined" />
+              <TextField id="outlined-basic" label="Description" variant="outlined" />
+            </Stack>
+          </FormControl>
+        </DialogContentText>
+      </DialogContent>
     </Box>
+
+
+
 
   )
 }
