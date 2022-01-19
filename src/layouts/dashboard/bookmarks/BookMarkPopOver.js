@@ -67,6 +67,9 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
     },[])
   const handleShowCallback = () => setBookmarkOpen((prev) => !prev);
   const handleBookmarkSelect = (d) => applyBookmark(d.id)
+  const handleClearSelections = () => {
+    clearSelections()
+  }
 
 
   return (
@@ -149,7 +152,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
               type="submit"
               color="inherit"
               variant="outlined"
-              onClick={'onResetFilter'}
+              onClick={clearSelections}
               startIcon={<Icon icon={roundClearAll} />}>
               Clear BookMarks
             </Button>

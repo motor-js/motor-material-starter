@@ -1,4 +1,4 @@
-
+import {Component,React} from 'react';
 // material
 import { IconButton, Box, FormControl, Stack, Typography, TextField } from '@mui/material';
 // material dialog
@@ -7,27 +7,60 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
 
-export default function CreateBookMarkForm() {
+class CreateBookMarkForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+        bookmarkTitle: '',
+        
+    };
+};
+
+handleSubmit = event => {
+  event.preventDefault();
+  const userInput = this.state.bookmarkTitle;
+  if ((userInput)) {
+      this.props.addBookmark(userInput);
+      this.setState({
+          bookmarkTitle: '',
+          
+      });
+  } 
+};
+
+updateInputState = event => {
+  this.setState({ bookmarkTitle: event.target.value });
+};
+
+  render() {
   return (
-    <Box>
-      <DialogTitle id="alert-dialog-title">
-        Create New BookMark
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          <FormControl>
-            <Stack direction="column" spacing={2}>
-              <TextField id="outlined-basic" label="Title" variant="outlined" />
-              <TextField id="outlined-basic" label="Description" variant="outlined" />
-            </Stack>
-          </FormControl>
-        </DialogContentText>
-      </DialogContent>
-    </Box>
+  <>
+    <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Title"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
 
-
-
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+  
+  </>
+    
 
   )
 }
+}
+export default CreateBookMarkForm;
