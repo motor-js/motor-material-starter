@@ -128,6 +128,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
 {bookmarkList.map((row, id) => (
              
                 <List component="div" disablePadding sx={{ display: 'flex', flexDirection: 'row' }}>
+                   {row.title}
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <Badge color="error" />
