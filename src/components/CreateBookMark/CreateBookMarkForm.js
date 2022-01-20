@@ -1,4 +1,4 @@
-import {Component,React} from 'react';
+import {Component,React,useState} from 'react';
 // material
 import { IconButton, Box, FormControl, Stack, Typography, TextField } from '@mui/material';
 // material dialog
@@ -9,32 +9,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 
-class CreateBookMarkForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-        bookmarkTitle: '',
-        
-    };
-};
+const CreateBookMarkForm = ({ show, createBookmark, showCallback }) => {
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const handleCancel = () => showCallback()
+  const handleCreate = () => {
+    createBookmark(title,description) 
+    showCallback()
+  }
 
-handleSubmit = event => {
-  event.preventDefault();
-  const userInput = this.state.bookmarkTitle;
-  if ((userInput)) {
-      this.props.addBookmark(userInput);
-      this.setState({
-          bookmarkTitle: '',
-          
-      });
-  } 
-};
+  const handleTitle = (e) => setTitle(e.target.value)
+  
+  const handleDescription = (e) => setDescription(e.target.value)
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
-updateInputState = event => {
-  this.setState({ bookmarkTitle: event.target.value });
-};
-
-  render() {
   return (
   <>
     <TextField
@@ -45,6 +35,8 @@ updateInputState = event => {
             type="text"
             fullWidth
             variant="standard"
+            onChange={handleTitle}
+            placeholder="Title"
           />
 
           <TextField
@@ -55,12 +47,15 @@ updateInputState = event => {
             type="text"
             fullWidth
             variant="standard"
+            onChange={handleDescription}
+            placeholder="Description"
           />
+           <Button color="primary" onClick={handleCreate}>Create</Button>
+            {/* <Button autoFocus onClick={handleClose} >Close</Button> */}
   
   </>
     
 
   )
-}
 }
 export default CreateBookMarkForm;

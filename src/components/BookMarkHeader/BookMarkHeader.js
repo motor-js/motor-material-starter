@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {React,useState} from 'react';
 // Material
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -15,20 +15,40 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CreateBookMarkForm from '../CreateBookMark'
 
-export default function BookMarkHeader() {
-  const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
-  const {bookmarkList,applyBookmark,createBookmark,} = useBookmark()
+const BookMarkHeader =  ({ anchorEl,showCallback }) => {
+  const [open, setOpen] = useState(false);
+  const [fullWidth, setFullWidth] = useState(true);
+  const [maxWidth, setMaxWidth] = useState('sm');
+  
+  const handleCancel = () => showCallback()
+  const {bookmarkList,applyBookmark,createBookmark,
+    bookmarks,
+    getBookmark,
+    updateBookmark,
+    destroyBookmark} = useBookmark();
+  const [bookmarkId, setBookmarkId] = useState("");
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
 
 
+
+  const handleTitle = (e) => setTitle(e.target.value)
+  const handleDescription = (e) => setDescription(e.target.value)
+  const handleCreate = () => {
+    createBookmark(title,description) 
+    showCallback()
+  };
+
+  const deleteBookmark = async (e, id) => {
+  const destroyed = await destroyBookmark(id);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+
 
 
   return (
@@ -42,24 +62,47 @@ export default function BookMarkHeader() {
         startIcon={<Icon icon={editBookMark} />}>
         Create BookMark
       </Button>
+{/* .........................bookmark dialog */}
         <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           fullWidth={fullWidth}
-          maxWidth={maxWidth}
-        >
-          < CreateBookMarkForm/>
-         
+          maxWidth={maxWidth}>
+{/* .........................dialog form fields */}           
+          <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Title"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={handleTitle}
+            placeholder="Title"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={handleDescription}
+            placeholder="Description"
+          />
+          </DialogContent>
+
           <DialogActions>
-            <Button onClick={applyBookmark}>Save</Button>
-            <Button autoFocus onClick={handleClose}>
-            Close
-          </Button>
+            <Button onClick={handleCreate}>Save</Button>
+            <Button autoFocus onClick={handleClose}>Close</Button>
           </DialogActions>
         </Dialog>
-   
+  
     </Stack>
   );
 }
+export default BookMarkHeader;
