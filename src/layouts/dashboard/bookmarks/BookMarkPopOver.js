@@ -1,10 +1,9 @@
-import { useRef, useState,useCallback } from 'react';
+import React, { useState,useCallback,useRef } from "react";
 // icons
 import bookmark from '@iconify/icons-eva/bookmark-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 import { Icon } from '@iconify/react';
-
 
 // motor
 import { useBookmark,useSelections,useButton } from "@motor-js/engine"
@@ -43,11 +42,23 @@ export default function BookMarkPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState(false);
-  const { selections, clearSelections } = useSelections();
-const {bookmarkList,applyBookmark,createBookmark,} = useBookmark()
+  const {
+    bookmarks, 
+    bookmarkList,
+    appliedBookmark, 
+    bookmarkInfo, 
+    applyBookmark,
+    createBookmark,
+    destroyBookmark,
+    getBookmark,
+    getBookmarkLayout,
+    updateBookmark,
+    clearBookmarks,
+    error
+} = useBookmark();
 const [bookmarkOpen, setBookmarkOpen] = useState(false)
 
-  console.log(selections)
+  console.log(bookmarks)
 
   const handleOpen = () => {
     setOpen(true);
@@ -67,8 +78,8 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
     },[])
   const handleShowCallback = () => setBookmarkOpen((prev) => !prev);
   const handleBookmarkSelect = (d) => applyBookmark(d.id)
-  const handleClearSelections = () => {
-    clearSelections()
+  const handleClearBookMarks = () => {
+    clearBookmarks()
   }
 
 
@@ -96,12 +107,13 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
       >
         <Icon icon={bookmark} width={20} height={20} />
       </IconButton>
+      {bookmarkList && (
       <MenuPopover
         open={open}
         onClose={handleClose}
         anchorEl={anchorRef.current}
-        sx={{ width: 460 }}
-      >
+        sx={{ width: 460 }}>
+
         <List
           sx={{ width: '100%', maxWidth: 460, bgcolor: 'background.paper' }}
           component="nav"
@@ -113,27 +125,25 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
           }
         >
 
-          {selections && selections.length > 0 &&
-            selections.map((sel, i) => (
-              <Collapse key={i} in={open} timeout="auto" unmountOnExit>
+{bookmarkList.map((row, id) => (
+             
                 <List component="div" disablePadding sx={{ display: 'flex', flexDirection: 'row' }}>
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemIcon>
-                      <Badge badgeContent={sel.qSelectedFieldSelectionInfo.length} color="error" />
+                      <Badge color="error" />
                     </ListItemIcon>
-                    <ListItemText primary={sel.qField} />
+                    <ListItemText  />
                     <KeyboardArrowDownIcon sx={{ ml: 'auto' }} fontSize="small" />
                   </ListItemButton>
                   <IconButton>
                     <BookMark fontSize="small" />
                   </IconButton>
                   <IconButton>
-                    <DeleteIcon fontSize="small" sx={{ mr: 2 }} />
+                    <DeleteIcon onClick={clearBookmarks} fontSize="small" sx={{ mr: 2 }} />
                   </IconButton>
                 </List>
-              </Collapse>
-            )
-            )}
+         
+))}
           <Box
             component="form"
             sx={{
@@ -152,7 +162,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
               type="submit"
               color="inherit"
               variant="outlined"
-              onClick={clearSelections}
+              onClick={clearBookmarks}
               startIcon={<Icon icon={roundClearAll} />}>
               Clear BookMarks
             </Button>
@@ -169,6 +179,7 @@ const [bookmarkOpen, setBookmarkOpen] = useState(false)
           </Box>
         </List>
       </MenuPopover>
+         )}
     </>
   )
 }
