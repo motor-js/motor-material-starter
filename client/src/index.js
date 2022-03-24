@@ -4,15 +4,16 @@ import 'simplebar/src/simplebar.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { Motor } from "@motor-js/engine"
+import { Motor } from '@motor-js/engine';
+import './styles/index.css';
 
 //
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
-import Store from "./store/store";
+import Store from './store/store';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
-import { qlikConfig } from './config'
+import { qlikConfig } from './config';
 
 // ----------------------------------------------------------------------
 
