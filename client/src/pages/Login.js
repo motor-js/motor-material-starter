@@ -8,10 +8,28 @@ import Page from '../components/Page';
 import image from '../images/pexels-ashutosh-sonwani-2016145.jpg';
 import Logo from '../components/Logo';
 
+const enigma = require('enigma.js');
+const schema = require('enigma.js/schemas/12.20.0.json');
+
 // ----------------------------------------------------------------------
 
 export default function Login() {
   const { themeStretch } = useSettings();
+
+  const getTicket = () =>
+    fetch('/get-ticket')
+      .then((res) => res.json())
+      .then((data) => data.ticket)
+      .then((ticket) => {
+        console.log('TICKET! ', ticket);
+        return enigma.create({
+          schema,
+          url: `wss://sense-motor.adviseinc.co.uk/motor-ticket/app/engineData?QlikTicket=${ticket}`,
+          createSocket: (url) => new WebSocket(url),
+        });
+      })
+      .then((session) => session.open())
+      .then((global) => console.log('GLOBAL: ', global));
 
   // const useStyles = makeStyles({
   //   color: {
@@ -69,6 +87,8 @@ export default function Login() {
                 }}
               />
               <Button
+                onClick={getTicket}
+                type="submit"
                 color="primary"
                 varaint="contained"
                 style={{ outline: 'auto', marginTop: 20 }}
