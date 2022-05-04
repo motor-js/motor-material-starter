@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# certs
+/certs_adviseinc
+/certs_sensemotor
+
 # testing
 /coverage
 
