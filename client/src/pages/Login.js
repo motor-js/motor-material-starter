@@ -24,7 +24,7 @@ export default function Login() {
         console.log('TICKET! ', ticket);
         return enigma.create({
           schema,
-          url: `wss://sense-motor.adviseinc.co.uk/motor-ticket/app/engineData?QlikTicket=${ticket}`,
+          url: `wss://sense-motor.motor.co.uk/motor-ticket/app/engineData?QlikTicket=${ticket}`,
           createSocket: (url) => new WebSocket(url),
         });
       })
