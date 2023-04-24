@@ -5,8 +5,8 @@ const xrfKey = 'abcdefghijklmnop';
 
 module.exports = {
   // Your Sense Enterprise installation hostname
-  //host: 'motor.westeurope.cloudapp.azure.com', //'sense-motor.adviseinc.co.uk', //sensedev.adviseinc.co.uk
-  host: 'sense-motor.adviseinc.co.uk',
+  //host: 'motor.westeurope.cloudapp.azure.com',
+  host,
   // Listening port of the Qlik Sense Enterprise proxy
   proxyPort: 4243,
   // Name of virtualProxy to be used (begin with '/')
@@ -14,13 +14,14 @@ module.exports = {
   // 'engineData' is a special "app id" that indicates you only want to use the global
   appId: 'engineData',
   //userDirectory: 'motor',
-  //userId: 'luke',
- userDirectory: 'ADVINC',
- userId: 'Motor_User1',
+  userDirectory,
+  userId,
 
   xrfKey: xrfKey,
   // URL to the QPS there the ticket is retrived
-  ticketURL() { return `https://${this.host}:${this.proxyPort}/qps${this.virtualProxy}/ticket?xrfkey=${xrfKey}`; },
+  ticketURL() {
+    return `https://${this.host}:${this.proxyPort}/qps${this.virtualProxy}/ticket?xrfkey=${xrfKey}`;
+  },
   // Body sent in the ticket request
   ticketReqBody() {
     return {
