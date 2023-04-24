@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "AdviseInc",
+  "author": "Motor",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
